@@ -1,0 +1,17 @@
+# Gradle stuff
+/build/
+/plugin/build/
+/.gradle/
+
+# IDEA stuff
+/out/
+/.idea/
+*.iml
+out/
+
+# Mac stuff
+.DS_Store
+
+# VIM
+*.swp
+
