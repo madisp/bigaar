@@ -51,8 +51,7 @@ abstract class CreateShadeInputs : DefaultTask() {
             var entry = inStream.nextEntry
             while (entry != null) {
               // only copy classes, META-INF will be lost
-              if (entry.name.endsWith(".class", ignoreCase = true)) {
-
+              if (entry.name.endsWith(".class", ignoreCase = true) && !entry.name.endsWith("module-info.class")) {
                 var newName = entry.name
                 if (ignores.none(entry.name::startsWith)) {
                   newName = "$prefix/${entry.name}"
