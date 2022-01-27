@@ -1,6 +1,8 @@
 allprojects {
+  version = "0.1.0"
+
   repositories {
     mavenCentral()
+    google()
   }
-  version = "0.1.0"
 }

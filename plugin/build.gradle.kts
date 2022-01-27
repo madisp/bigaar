@@ -18,3 +18,7 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().all {
     jvmTarget = "11"
   }
 }
+
+dependencies {
+  compileOnly("com.android.tools.build:gradle:7.0.4")
+}

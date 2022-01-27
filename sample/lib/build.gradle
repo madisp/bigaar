@@ -1,5 +1,8 @@
-apply plugin: 'com.android.library'
-apply plugin: 'pink.madis.bigaar'
+plugins {
+  id 'pink.madis.bigaar'
+  id 'com.android.library'
+  id 'org.jetbrains.kotlin.android'
+}
 
 android {
   compileSdkVersion 31
@@ -16,5 +19,5 @@ android {
 }
 
 dependencies {
-  implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+  shaded 'com.squareup.retrofit2:retrofit:2.9.0'
 }
