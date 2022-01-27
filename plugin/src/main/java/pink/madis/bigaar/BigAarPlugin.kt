@@ -55,9 +55,16 @@ open class BigAarPlugin : Plugin<Project> {
 
     val apiExt = project.extensions.getByType(LibraryAndroidComponentsExtension::class.java)
     apiExt.onVariants {
-      it.transformClassesWith(BigAarRemapperFactory::class.java, InstrumentationScope.PROJECT) { params ->
-        params.remappingFile.set(mappingFiles.getOrPut(it.name) { project.layout.buildDirectory
-          .file("intermediates/bigaar_${it.name}/mapping.txt") })
+      if (it.name == "release") {
+        it.transformClassesWith(
+          BigAarRemapperFactory::class.java,
+          InstrumentationScope.PROJECT
+        ) { params ->
+          params.remappingFile.set(mappingFiles.getOrPut(it.name) {
+            project.layout.buildDirectory
+              .file("intermediates/bigaar_${it.name}/mapping.txt")
+          })
+        }
       }
     }
   }
