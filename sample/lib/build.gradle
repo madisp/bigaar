@@ -21,3 +21,8 @@ android {
 dependencies {
   shaded 'com.squareup.retrofit2:retrofit:2.9.0'
 }
+
+bigaar {
+  ignorePrefixes = ["pink.madis"]
+  repackagePrefix = "pink.madis.internal"
+}

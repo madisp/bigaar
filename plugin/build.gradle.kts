@@ -21,4 +21,6 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().all {
 
 dependencies {
   compileOnly("com.android.tools.build:gradle:7.0.4")
+  implementation("org.ow2.asm:asm:9.2")
+  implementation("org.ow2.asm:asm-commons:9.2")
 }
