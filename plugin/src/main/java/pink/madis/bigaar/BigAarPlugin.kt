@@ -33,7 +33,7 @@ open class BigAarPlugin : Plugin<Project> {
     val mappingFiles = mutableMapOf<String, Provider<RegularFile>>()
 
     legacyExt.libraryVariants.all {
-      if (it.name == "release") {
+      if (it.buildType.name == "release") {
         val shadedClasses = project.layout.buildDirectory.file("intermediates/bigaar_${it.name}/shaded_classes.jar")
 
         val shadeInputsTask = project.tasks.register("shade${it.name.capped}", CreateShadeInputs::class.java) { inputs ->
@@ -55,7 +55,7 @@ open class BigAarPlugin : Plugin<Project> {
 
     val apiExt = project.extensions.getByType(LibraryAndroidComponentsExtension::class.java)
     apiExt.onVariants {
-      if (it.name == "release") {
+      if (it.buildType == "release") {
         it.transformClassesWith(
           BigAarRemapperFactory::class.java,
           InstrumentationScope.PROJECT
