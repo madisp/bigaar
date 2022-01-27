@@ -1,13 +1,14 @@
 # Gradle stuff
 /build/
-/plugin/build/
+/*/build/
+/sample/*/build/
 /.gradle/
+/sample/.gradle/
 
 # IDEA stuff
 /out/
 /.idea/
 *.iml
-out/
 
 # Mac stuff
 .DS_Store
