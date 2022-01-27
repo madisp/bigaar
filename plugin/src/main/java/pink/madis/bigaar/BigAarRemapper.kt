@@ -33,9 +33,7 @@ class BigAarRemapper(
   private val mapping: Map<String, String>
 ) : Remapper() {
   override fun map(internalName: String): String {
-    val newName = mapping[internalName] ?: super.map(internalName)
-    println("Mapped $internalName to $newName")
-    return newName
+    return mapping[internalName] ?: super.map(internalName)
   }
 }
 
