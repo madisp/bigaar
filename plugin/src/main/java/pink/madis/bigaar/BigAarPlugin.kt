@@ -44,7 +44,7 @@ open class BigAarPlugin : Plugin<Project> {
 
           inputs.shadeFiles = shadedConfig
 
-          inputs.ignorePrefixes.set(extension.ignorePrefixes)
+          inputs.ignorePrefixes.set(extension.ignorePrefixes.orElse(emptyList()))
 
           inputs.repackagePrefix.set(extension.repackagePrefix)
         }
