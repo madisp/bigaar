@@ -2,6 +2,7 @@ plugins {
   `java-gradle-plugin`
   `maven-publish`
   kotlin("jvm") version "1.5.31"
+  id("com.vanniktech.maven.publish")
 }
 
 gradlePlugin {
@@ -23,4 +24,8 @@ dependencies {
   compileOnly("com.android.tools.build:gradle:7.0.4")
   implementation("org.ow2.asm:asm:9.2")
   implementation("org.ow2.asm:asm-commons:9.2")
+}
+
+mavenPublish {
+  sonatypeHost = SonatypeHost.S01
 }

@@ -1,0 +1,48 @@
+name: Deploy to public maven repository
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - '*'
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+    # PREP
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Setup JDK
+      uses: actions/setup-java@v2
+      with:
+        distribution: 'temurin'
+        java-version: '11'
+    - name: Validate Gradle wrapper
+      uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
+    - name: Setup Gradle Cache
+      uses: actions/cache@v2
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle
+    # BUILD
+    - name: Build environment
+      run: |
+        echo "Building ref '${{ github.ref }}'"
+    - name: Publish jars
+      env:
+        ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.OSSRH_USER }}
+        ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.OSSRH_PASSWORD }}
+        ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.SIGNING_KEY }}
+        ORG_GRADLE_PROJECT_signingInMemoryKeyId: ${{ secrets.SIGNING_KEY_ID }}
+        ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SIGNING_KEY_PASSPHRASE }}
+      run: ./gradlew publishAllPublicationsToMavenCentralRepository --no-parallel --no-daemon
+    # CLEANUP
+    - name: Cleanup Gradle Cache
+      # Remove some files from the Gradle cache, so they aren't cached by GitHub Actions.
+      # Restoring these files from a GitHub Actions cache might cause problems for future builds.
+      run: |
+        rm -f ~/.gradle/caches/modules-2/modules-2.lock
+        rm -f ~/.gradle/caches/modules-2/gc.properties
