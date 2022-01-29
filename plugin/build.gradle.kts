@@ -29,5 +29,5 @@ dependencies {
 }
 
 mavenPublish {
-  sonatypeHost = SonatypeHost.S01
+  sonatypeHost = SonatypeHost.DEFAULT
 }
