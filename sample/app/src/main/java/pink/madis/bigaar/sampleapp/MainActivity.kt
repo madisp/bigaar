@@ -1,40 +1,20 @@
 package pink.madis.bigaar.sampleapp
 
 import android.os.Bundle
+import android.view.ViewGroup.MarginLayoutParams
+import android.widget.TextView
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import pink.madis.bigaar.sampleapp.ui.theme.SampleAppTheme
+import pink.madis.bigaar.sample.SomeFile
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            SampleAppTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
-                    Greeting("Android")
-                }
-            }
-        }
-    }
-}
-
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    SampleAppTheme {
-        Greeting("Android")
+        setContentView(TextView(this).apply {
+            layoutParams = MarginLayoutParams(
+                MarginLayoutParams.MATCH_PARENT,
+                MarginLayoutParams.MATCH_PARENT
+            )
+            text = SomeFile.foobar()
+        })
     }
 }

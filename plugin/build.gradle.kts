@@ -16,6 +16,11 @@ gradlePlugin {
   }
 }
 
+java {
+  sourceCompatibility = JavaVersion.VERSION_11
+  targetCompatibility = JavaVersion.VERSION_11
+}
+
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().all {
   kotlinOptions {
     jvmTarget = "11"
@@ -23,9 +28,9 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().all {
 }
 
 dependencies {
-  compileOnly("com.android.tools.build:gradle:7.0.4")
-  implementation("org.ow2.asm:asm:9.2")
-  implementation("org.ow2.asm:asm-commons:9.2")
+  compileOnly("com.android.tools.build:gradle:7.3.1")
+  implementation("org.ow2.asm:asm:9.4")
+  implementation("org.ow2.asm:asm-commons:9.4")
 }
 
 mavenPublish {

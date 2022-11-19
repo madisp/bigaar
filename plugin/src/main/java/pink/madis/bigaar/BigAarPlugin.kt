@@ -5,6 +5,11 @@ import com.android.build.api.variant.LibraryAndroidComponentsExtension
 import com.android.build.gradle.LibraryExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.artifacts.type.ArtifactTypeDefinition.ARTIFACT_TYPE_ATTRIBUTE
+import org.gradle.api.artifacts.type.ArtifactTypeDefinition.JAR_TYPE
+import org.gradle.api.attributes.Usage
+import org.gradle.api.attributes.Usage.JAVA_RUNTIME
+import org.gradle.api.attributes.Usage.USAGE_ATTRIBUTE
 import org.gradle.api.file.RegularFile
 import org.gradle.api.provider.Provider
 
@@ -21,6 +26,13 @@ open class BigAarPlugin : Plugin<Project> {
   private fun configurePlugin(extension: BigAarExtension, project: Project) {
     // create the shaded configuration
     val shadedConfig = project.configurations.maybeCreate("shaded")
+
+    val shadedClassesConfig = project.configurations.maybeCreate("shadedClasses")
+    shadedClassesConfig.attributes {
+      it.attribute(USAGE_ATTRIBUTE, project.objects.named(Usage::class.java, JAVA_RUNTIME))
+      it.attribute(ARTIFACT_TYPE_ATTRIBUTE, JAR_TYPE)
+    }
+    shadedClassesConfig.extendsFrom(shadedConfig)
 
     // debugImplementation should extend from shaded for normal operation in debug
     project.configurations.getByName("debugImplementation").extendsFrom(shadedConfig)
@@ -42,7 +54,7 @@ open class BigAarPlugin : Plugin<Project> {
           inputs.outputMap.set(mappingFiles.getOrPut(it.name) { project.layout.buildDirectory
             .file("intermediates/bigaar_${it.name}/mapping.txt") })
 
-          inputs.shadeFiles = shadedConfig
+          inputs.shadeFiles = shadedClassesConfig
 
           inputs.ignorePrefixes.set(extension.ignorePrefixes.orElse(emptyList()))
 

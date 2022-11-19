@@ -1,7 +1,11 @@
 package pink.madis.bigaar
 
 import org.gradle.api.DefaultTask
+import org.gradle.api.artifacts.ArtifactView
 import org.gradle.api.artifacts.Configuration
+import org.gradle.api.attributes.Usage
+import org.gradle.api.attributes.Usage.JAVA_RUNTIME
+import org.gradle.api.attributes.Usage.USAGE_ATTRIBUTE
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.provider.ListProperty
 import org.gradle.api.provider.Property
@@ -36,9 +40,20 @@ abstract class CreateShadeInputs : DefaultTask() {
     val ignores = ignorePrefixes.get().map { it.replace('.', '/') }
     val prefix = repackagePrefix.get().replace('.', '/')
 
+    val artifactView = shadeFiles.incoming.artifactView {
+      it.attributes {
+        it.attribute(
+          Usage.USAGE_ATTRIBUTE, project.objects.named(
+            Usage::class.java,
+            Usage.JAVA_RUNTIME
+          ))
+      }
+    }
+
     namesMap.writer(charset = Charsets.UTF_8).use { names ->
       ZipOutputStream(outJar.outputStream().buffered()).use { outStream ->
-        (shadeFiles.files).forEach {
+
+        artifactView.files.forEach {
           if (!it.isFile) {
             throw IllegalStateException("Only file inputs (jars/aars) are accepted for shading")
           }
