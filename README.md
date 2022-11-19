@@ -11,7 +11,7 @@ you want to shade:
 
 ```groovy
 plugins {
-  id 'pink.madis.bigaar' version '0.1.0'
+  id 'pink.madis.bigaar' version '0.1.1'
 }
 ```
 
@@ -27,7 +27,7 @@ buildscript {
     mavenCentral()
   }
   dependencies {
-    classpath 'pink.madis.bigaar:gradle-plugin:0.1.0'
+    classpath 'pink.madis.bigaar:gradle-plugin:0.1.1'
   }
 }
 ```
@@ -55,12 +55,17 @@ bigaar {
 
 ## Roadmap
 
+Contributions welcome!
+
 - [x] basic shading of .jar files
-- [ ] automatically add proguard consumer rules from input libraries
+- [x] support for shading in-module projects
+  - **CAVEAT**: currently only works for single-variant in-module projects,
+    like release or debug. See [sample/lib-other/build.gradle](lib-other) as an example
 - [ ] handling for shading partial dependency trees (i.e. a shaded lib
   transitively depends on a non-shaded library)
+- [ ] automatically add proguard consumer rules from input libraries
 - [ ] support for shading in `.aar` libraries
-- [ ] support for shading in-module projects
+- [ ] a few integration tests wouldn't hurt
 
 ## License
 
