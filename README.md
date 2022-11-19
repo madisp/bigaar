@@ -60,7 +60,7 @@ Contributions welcome!
 - [x] basic shading of .jar files
 - [x] support for shading in-module projects
   - **CAVEAT**: currently only works for single-variant in-module projects,
-    like release or debug. See [sample/lib-other/build.gradle](lib-other) as an example
+    like release or debug. See [lib-other build.gradle file](sample/lib-other/build.gradle) as an example
 - [ ] handling for shading partial dependency trees (i.e. a shaded lib
   transitively depends on a non-shaded library)
 - [ ] automatically add proguard consumer rules from input libraries
